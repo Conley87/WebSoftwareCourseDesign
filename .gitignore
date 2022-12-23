@@ -1,1 +1,3 @@
 /target/
+!/src/main/resources/check.properties
+!/src/main/resources/druid.properties
