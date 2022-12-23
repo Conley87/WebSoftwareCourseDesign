@@ -3,23 +3,15 @@ package cn.hnie.database;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
 import javax.sql.DataSource;
-import java.io.InputStream;
 import java.sql.*;
-import java.util.Properties;
 
 public class Init {
     private static DataSource dataSource;
     private static final String[] tablesName = {"admin", "teacher", "student", "subject", "stu_subj", "teacher_stu"};
 
     static {
-        Properties properties = new Properties();
-        InputStream inputStream = Init.class.getResourceAsStream("/check.properties");
-        try {
-            properties.load(inputStream);
-            dataSource = DruidDataSourceFactory.createDataSource(properties);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //connect to Mysql
+        dataSource = DBUtils.connect("/check.properties");
 
         //check whether database exists
         try {
@@ -31,14 +23,7 @@ public class Init {
         }
 
         //connect to CourseDesign database
-        properties.clear();
-        inputStream = Init.class.getResourceAsStream("/druid.properties");
-        try {
-            properties.load(inputStream);
-            dataSource = DruidDataSourceFactory.createDataSource(properties);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        dataSource = DBUtils.connect("/druid.properties");
 
         //check whether tables exist
         try {
@@ -71,6 +56,7 @@ public class Init {
         ResultSet resultSet = statement.executeQuery(checkSQL);
 
         boolean flag = resultSet.next();
+        DBUtils.close(connection, statement, resultSet);
         return flag;
     }
 
@@ -81,6 +67,8 @@ public class Init {
         Statement statement = connection.createStatement();
 
         statement.executeUpdate(createSQL);
+
+        DBUtils.close(connection, statement);
     }
 
     public static boolean checkTable(String tableName) throws SQLException {
@@ -94,6 +82,7 @@ public class Init {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         boolean flag = resultSet.next();
+        DBUtils.close(connection, preparedStatement, resultSet);
         return flag;
     }
 
