@@ -25,7 +25,11 @@ public class InitTest {
 
     @Test
     public void createTableTest() {
-
+        try {
+            Init.createTable("manager");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -36,5 +40,17 @@ public class InitTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void thrErrorTest() {
+        for (int i = 0; i < 5; i++) {
+            try {
+                throw new Exception("112323");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }
