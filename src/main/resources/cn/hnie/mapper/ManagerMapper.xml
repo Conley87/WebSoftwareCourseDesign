@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hnie.mapper.ManagerMapper">
+    <insert id="insertStudent" parameterType="student">
+        insert into student values (#{studentId},#{password},#{name},#{teacherId},#{age},#{sex},#{department},#{phoneNumber},#{subjectId},#{content})
+    </insert>
+
+    <insert id="insertTeacher" parameterType="teacher">
+        insert into teacher values (#{teacherId},#{password},#{name},#{age},#{department},#{phoneNumber});
+    </insert>
+
+    <select id="login" resultType="string">
+        select password from manager where admin_id=#{id}
+    </select>
+</mapper>
