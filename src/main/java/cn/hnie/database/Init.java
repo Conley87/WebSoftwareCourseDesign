@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class Init {
     private static DataSource dataSource;
-    private static final String[] tablesName = {"manager", "teacher", "student", "subject", "stu_subj"};
+    private static final String[] tablesName = {"manager", "teacher", "student", "subject", "choice"};
 
     static {
         //connect to Mysql
@@ -85,7 +85,6 @@ public class Init {
         return flag;
     }
 
-    //todo finish tables structure
     public static void createTable(String tableName) throws SQLException {
         final String managerSQL = "CREATE TABLE `manager` (\n" +
                 "\t`adminID` VARCHAR ( 20 ) CHARACTER \n" +
@@ -100,6 +99,8 @@ public class Init {
         final String teacherSQL = "CREATE TABLE `teacher` (\n" +
                 "\t`teacherID` VARCHAR ( 20 ) CHARACTER \n" +
                 "\tSET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,\n" +
+                "\t`password` VARCHAR ( 255 ) CHARACTER \n" +
+                "\tSET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,\n" +
                 "\t`name` VARCHAR ( 20 ) CHARACTER \n" +
                 "\tSET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,\n" +
                 "\t`age` INT NULL DEFAULT NULL,\n" +
@@ -112,6 +113,8 @@ public class Init {
                 "SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;";
         final String stuSQL = "CREATE TABLE `student` (\n" +
                 "\t`studentID` VARCHAR ( 20 ) CHARACTER \n" +
+                "\tSET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,\n" +
+                "\t`password` VARCHAR ( 255 ) CHARACTER \n" +
                 "\tSET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,\n" +
                 "\t`name` VARCHAR ( 20 ) CHARACTER \n" +
                 "\tSET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,\n" +
@@ -130,15 +133,19 @@ public class Init {
                 "\tSET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,\n" +
                 "\t`teacherID` VARCHAR ( 20 ) CHARACTER \n" +
                 "\tSET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,\n" +
+                "\t`subjectTitle` VARCHAR ( 255 ) CHARACTER \n" +
+                "\tSET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,\n" +
                 "\tPRIMARY KEY ( `subjectID` ) USING BTREE,\n" +
                 "\tINDEX `t` ( `teacherID` ASC ) USING BTREE,\n" +
                 "\tCONSTRAINT `t` FOREIGN KEY ( `teacherID` ) REFERENCES `teacher` ( `teacherID` ) ON DELETE CASCADE ON UPDATE CASCADE \n" +
                 ") ENGINE = INNODB CHARACTER \n" +
                 "SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;";
-        final String stu_subjSQL = "CREATE TABLE `stu_subj` (\n" +
+        final String choiceSQL = "CREATE TABLE `choice` (\n" +
                 "\t`studentID` VARCHAR ( 20 ) CHARACTER \n" +
                 "\tSET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,\n" +
                 "\t`subjectID` VARCHAR ( 255 ) CHARACTER \n" +
+                "\tSET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,\n" +
+                "\t`teacherID` VARCHAR ( 20 ) CHARACTER \n" +
                 "\tSET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,\n" +
                 "\tPRIMARY KEY ( `studentID` ) USING BTREE,\n" +
                 "\tINDEX `subj` ( `subjectID` ASC ) USING BTREE,\n" +
@@ -152,12 +159,11 @@ public class Init {
         map.put("teacher", teacherSQL);
         map.put("student", stuSQL);
         map.put("subject", subjectSQL);
-        map.put("stu_subj", stu_subjSQL);
+        map.put("choice", choiceSQL);
 
         Connection connection = getConnection();
         Statement statement = connection.createStatement();
 
-        System.out.println(map.get(tableName));
         statement.executeUpdate(map.get(tableName));
 
         DBUtils.close(connection, statement);
