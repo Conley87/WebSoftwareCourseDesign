@@ -68,7 +68,7 @@ public class ManagerDao {
         return b;
     }
     //通过id删除教师
-    public static boolean insertTeacher(String id){
+    public static boolean deleteTeacher(String id){
         SqlSession session = DBUtils.getSession(true);
         ManagerMapper mapper = session.getMapper(ManagerMapper.class);
         boolean b=mapper.deleteTeacherById(id)==1;

@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * 管理员登录验证
  */
-@WebServlet(name = "AdminServlet", value = "/AdminServlet")
+@WebServlet(name = "AdminServlet", value = "/AdminServlet")//TODO(设置登录页面的处理路径)
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
