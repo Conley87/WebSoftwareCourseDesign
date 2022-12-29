@@ -15,9 +15,9 @@ public class test {
     @Test
     public void testInsert() {
         Student s=new Student();
-        s.setStudentId("0101");
+        s.setStudentId("0102");
         s.setPassword("123456");
-        s.setName("张三");
+        s.setName("李四");
         boolean b = ManagerDao.insertStudent(s);
         System.out.println(b);
     }

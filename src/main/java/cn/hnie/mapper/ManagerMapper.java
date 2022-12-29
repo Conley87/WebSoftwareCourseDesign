@@ -4,6 +4,8 @@ import cn.hnie.pojo.Student;
 import cn.hnie.pojo.Teacher;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface ManagerMapper {
     /**
@@ -12,6 +14,16 @@ public interface ManagerMapper {
      * 修改教师和学生的密码
      */
     String login(String adminID);
-    boolean insertStudent(Student s);
-    boolean insertTeacher(Teacher t);
+
+    int insertStudent(Student s);
+    int deleteStudentById(String s);
+    Student selectStudentById(String id);
+    List<Student> selectStudentAll();
+    int updateStudent(Student s);
+
+    int insertTeacher(Teacher t);
+    int deleteTeacherById(String id);
+    Teacher selectTeacherById(String id);
+    List<Teacher> selectTeacherAll();
+    int updateTeacher(Teacher t);
 }

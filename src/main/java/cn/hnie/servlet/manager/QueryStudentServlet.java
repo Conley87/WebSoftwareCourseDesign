@@ -9,7 +9,7 @@ import java.io.IOException;
 
 //admin进行查询
 @WebServlet(name = "QueryServlet", value = "/QueryServlet")
-public class QueryServlet extends HttpServlet {
+public class QueryStudentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

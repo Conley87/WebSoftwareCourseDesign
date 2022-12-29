@@ -3,15 +3,88 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.hnie.mapper.ManagerMapper">
-    <insert id="insertStudent" parameterType="student">
-        insert into student values (#{studentId},#{password},#{name},#{teacherId},#{age},#{sex},#{department},#{phoneNumber},#{subjectId},#{content})
-    </insert>
-
-    <insert id="insertTeacher" parameterType="teacher">
-        insert into teacher values (#{teacherId},#{password},#{name},#{age},#{department},#{phoneNumber});
-    </insert>
+    <resultMap id="studentResult" type="student">
+        <result property="teacherId" column="teacher_id"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="studentId" column="student_id"/>
+        <result property="subjectId" column="subject_id"/>
+    </resultMap>
+    <resultMap id="teacherResult" type="teacher">
+        <result property="teacherId" column="teacher_id"/>
+        <result property="phoneNumber" column="phone_number"/>
+    </resultMap>
+    <resultMap id="managerResult" type="manager">
+        <result property="adminID" column="admin_id"/>
+        <result property="phoneNumber" column="phone_number"/>
+    </resultMap>
 
     <select id="login" resultType="string">
-        select password from manager where admin_id=#{id}
+        select password
+        from manager
+        where admin_id = #{id}
     </select>
+
+
+    <insert id="insertStudent" parameterType="student">
+        insert into student
+        values (#{studentId}, #{password}, #{name}, #{teacherId}, #{age}, #{sex}, #{department}, #{phoneNumber},
+                #{subjectId}, #{content})
+    </insert>
+    <delete id="deleteStudentById">
+        delete
+        from student
+        where student_id = #{id};
+    </delete>
+    <select id="selectStudentById" resultMap="studentResult">
+        select *
+        from student
+        where student_id = #{id}
+    </select>
+    <select id="selectStudentAll" resultMap="studentResult">
+        select *
+        from student;
+    </select>
+    <update id="updateStudent" parameterType="student">
+        update student
+        <set>
+            <if test="password !=null">password = #{password},</if>
+            <if test="name !=null">name = #{name},</if>
+            <if test="teacherId!=null">teacher_id = #{teacherId},</if>
+            <if test="age >0">age =#{age},</if>
+            <if test="sex !=null">sex =#{sex},</if>
+            <if test="department !=null">department =#{department},</if>
+            <if test="phoneNumber !=null">phone_number = #{phone_number},</if>
+            <if test="subjectId >0">subject_id = #{subjectId},</if>
+            <if test="content !=null">content = #{content}</if>
+        </set>
+    </update>
+
+
+
+    <insert id="insertTeacher" parameterType="teacher">
+        insert into teacher
+        values (#{teacherId}, #{password}, #{name}, #{age}, #{department}, #{phoneNumber});
+    </insert>
+    <delete id="deleteTeacherById">
+        delete
+        from teacher
+        where teacher_id = #{id};
+    </delete>
+    <select id="selectTeacherById" resultMap="teacherResult">
+        select * from teacher where teacher_id=#{id};
+    </select>
+    <select id="selectTeacherAll" resultType="Teacher">
+        select * from teacher;
+    </select>
+    <update id="updateTeacher">
+        update teacher
+        <set>
+            <if test="password !=null">password =#{password},</if>
+            <if test="name !=null">name = #{name},</if>
+            <if test="age >0">age = #{age},</if>
+            <if test="department !=null">department = #{department},</if>
+            <if test="phoneNumber !=null">phone_number =#{phoneNumber}</if>
+        </set>
+    </update>
+
 </mapper>
