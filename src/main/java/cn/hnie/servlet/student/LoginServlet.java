@@ -24,6 +24,7 @@ public class LoginServlet extends HttpServlet {
 
         if (StudentDao.login(studentID, password)) {
             session.setAttribute("StudentFlag","true");
+            session.setAttribute("studentId",studentID);
             request.getRequestDispatcher("/student/studentIndex.html").forward(request,response);
         }else {
             session.setAttribute("StudentFlag","false");

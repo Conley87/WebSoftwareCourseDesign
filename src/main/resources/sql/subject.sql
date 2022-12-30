@@ -16,35 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `student`
+-- Table structure for table `subject`
 --
 
-DROP TABLE IF EXISTS `student`;
+DROP TABLE IF EXISTS `subject`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `student` (
-  `student_id` varchar(20) NOT NULL,
-  `password` varchar(32) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `teacher_id` varchar(20) DEFAULT NULL,
-  `age` int DEFAULT NULL,
-  `sex` char(2) DEFAULT NULL,
-  `department` varchar(25) DEFAULT NULL,
-  `phone_number` char(11) DEFAULT NULL,
-  `subject_id` int DEFAULT NULL,
-  `content` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`student_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `subject` (
+  `subject_id` int NOT NULL AUTO_INCREMENT,
+  `teacher_id` varchar(20) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`subject_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `student`
+-- Dumping data for table `subject`
 --
 
-LOCK TABLES `student` WRITE;
-/*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES ('0101','123456','张三',NULL,0,NULL,NULL,NULL,1,'/WEB-INF/upload/0101/92417695_p0.png'),('0102','123456','李四',NULL,0,NULL,NULL,NULL,1,NULL),('0105','123456','张三',NULL,0,NULL,NULL,NULL,0,NULL);
-/*!40000 ALTER TABLE `student` ENABLE KEYS */;
+LOCK TABLES `subject` WRITE;
+/*!40000 ALTER TABLE `subject` DISABLE KEYS */;
+INSERT INTO `subject` VALUES (1,'0101','毕设学生分配系统',NULL),(2,'0101','餐饮系统',NULL);
+/*!40000 ALTER TABLE `subject` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-30 12:35:30
+-- Dump completed on 2022-12-30 12:35:50

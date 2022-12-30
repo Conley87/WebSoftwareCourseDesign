@@ -18,12 +18,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String teacherID = request.getParameter("teacherID");
+        String teacherId = request.getParameter("teacherId");
         String password = request.getParameter("password");
         HttpSession session = request.getSession();
 
-        if (TeacherDao.login(teacherID, password)) {
+        if (TeacherDao.login(teacherId, password)) {
             session.setAttribute("teacher","true");
+            session.setAttribute("teacherId",teacherId);
             request.getRequestDispatcher("/teacher/teacherIndex.html").forward(request,response);
         }else{
             session.setAttribute("teacher","false");

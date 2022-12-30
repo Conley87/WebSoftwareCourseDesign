@@ -1,8 +1,8 @@
-package cn.hnie.servlet.manager;
+package cn.hnie.servlet.student;
 
-import cn.hnie.dao.ManagerDao;
-import cn.hnie.pojo.Teacher;
-import com.alibaba.fastjson2.JSON;
+import cn.hnie.dao.StudentDao;
+import cn.hnie.pojo.Subject;
+import com.alibaba.fastjson2.JSONArray;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -10,14 +10,17 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-//返回一个json文本，包含查到的所有文本教师信息
-@WebServlet(name = "QueryAllTeacherServlet", value = "/QueryAllTeacherServlet")
-public class QueryAllTeacherServlet extends HttpServlet {
+//返回查询到的所有题目
+//没有和教师表进行连接查询
+@WebServlet(name = "QuerySubjectServlet", value = "/QuerySubjectServlet")
+public class QuerySubjectServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Teacher> list = ManagerDao.selectTeacherAll();
-        String s =JSON.toJSONString(list);
+        List<Subject> subjects = StudentDao.queryAllSubject();
+        for (Subject s:subjects)
+            System.out.println(s);
+        String s = JSONArray.toJSONString(subjects);
         response.setContentType("application/json;charset=utf-8");
         response.getWriter().write(s);
     }
@@ -25,6 +28,6 @@ public class QueryAllTeacherServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        doGet(request,response);
     }
 }

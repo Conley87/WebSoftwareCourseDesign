@@ -9,14 +9,15 @@ import java.util.Properties;
 public class DruidDataSourceFactory implements DataSourceFactory {
     private static DruidDataSource druid;
     private Properties properties;
+
     @Override
     public void setProperties(Properties props) {
-        this.properties=props;
+        this.properties = props;
     }
 
     @Override
     public DataSource getDataSource() {
-        druid=new DruidDataSource();
+        druid = new DruidDataSource();
         druid.setUrl(properties.getProperty("url"));
         druid.setUsername(properties.getProperty("username"));
         druid.setPassword(properties.getProperty("password"));
@@ -25,6 +26,7 @@ public class DruidDataSourceFactory implements DataSourceFactory {
         druid.setMinIdle(Integer.parseInt(properties.getProperty("minIdle")));
         return druid;
     }
+
     public static void close() {
         druid.close();
     }

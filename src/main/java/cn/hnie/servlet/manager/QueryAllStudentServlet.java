@@ -10,6 +10,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+//返回json文本，包含查到的所有学生信息
+//没有和教师信息进行连接查询
 @WebServlet(name = "QueryAllStudentServlet", value = "/QueryAllStudentServlet")
 public class QueryAllStudentServlet extends HttpServlet {
     @Override
