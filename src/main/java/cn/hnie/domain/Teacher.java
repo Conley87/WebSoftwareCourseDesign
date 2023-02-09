@@ -1,12 +1,12 @@
-package cn.hnie.pojo;
+package cn.hnie.domain;
 
 public class Teacher {
-    private String teacherId=null;
-    private String name=null;
-    private int age;
-    private String department=null;
-    private String phoneNumber=null;
-    private String password=null;
+    private String  teacherId;
+    private String  name;
+    private Integer age;
+    private String  department;
+    private String  phoneNumber;
+    private String  password;
 
     public String getTeacherId() {
         return teacherId;
@@ -24,11 +24,11 @@ public class Teacher {
         this.name = name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

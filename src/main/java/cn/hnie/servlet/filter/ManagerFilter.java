@@ -5,8 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-//TODO(设置该Filter拦截的资源)
-@WebFilter(filterName = "AdminFilter", value = "/admin/*")
+@WebFilter(filterName = "AdminFilter", value = "/manager/*")
 public class ManagerFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }

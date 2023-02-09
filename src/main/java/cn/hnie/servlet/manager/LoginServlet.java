@@ -1,6 +1,8 @@
 package cn.hnie.servlet.manager;
 
-import cn.hnie.dao.ManagerDao;
+import cn.hnie.domain.Result;
+import cn.hnie.service.ManagerService;
+import com.alibaba.fastjson2.JSONArray;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,28 +17,23 @@ import java.io.IOException;
  */
 @WebServlet(name = "AdminServlet", value = "/AdminServlet")//TODO(设置登录页面的处理路径)
 public class LoginServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        String adminID = req.getParameter("adminID");
-        String passwd = req.getParameter("passwd");
-        HttpSession session = req.getSession();
-
-        if (ManagerDao.login(adminID, passwd)) {
-            //登录成功在session中设置该用户对admin的操作权限
-            session.setAttribute("adminFlag", "true");
-            req.getRequestDispatcher("/admin/managerIndex.html").forward(req, resp);
-        } else {
-            session.setAttribute("adminFlag", "false");
-            resp.sendRedirect("/error.html");
-        }
-
-
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        doGet(req, resp);
+        String adminID = req.getParameter("adminID");
+        String passwd = req.getParameter("passwd");
+
+        HttpSession session = req.getSession();
+        resp.setContentType("application/json;charset=utf-8");
+        Result result;
+
+        if (ManagerService.login(adminID, passwd)) {
+            session.setAttribute("adminFlag", "true");
+            result = new Result("200");
+        } else {
+            result = new Result("2001");
+        }
+        resp.getWriter().write(JSONArray.toJSONString(result));
     }
 }

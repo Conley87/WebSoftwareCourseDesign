@@ -1,4 +1,4 @@
-package cn.hnie.pojo;
+package cn.hnie.domain;
 
 public class Manager {
     private String adminID;

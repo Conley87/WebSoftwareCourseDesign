@@ -1,8 +1,7 @@
 package cn.hnie.servlet.filter;
 
 
-import cn.hnie.dao.DruidDataSourceFactory;
-import com.alibaba.druid.pool.DruidDataSource;
+import cn.hnie.service.DruidDataSourceFactory;
 import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
 
 import javax.servlet.*;
@@ -25,6 +24,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         /* This method is called when the servlet Context is undeployed or Application Server shuts down. */
+        // 销毁加载的jdbc驱动，关闭druid数据源
         try {
             while (DriverManager.getDrivers().hasMoreElements()) {
                 DriverManager.deregisterDriver(DriverManager.getDrivers().nextElement());

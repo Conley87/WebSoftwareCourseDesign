@@ -1,13 +1,13 @@
-package cn.hnie.pojo;
+package cn.hnie.domain;
 
 public class StudentSubject {
-    private String studentId=null;
-    private String name=null;
-    private String sex=null;
-    private String phoneNumber=null;
-    private String title=null;
-    private String content=null;
-    private int subjectId=0;
+    private String  studentId;
+    private String  name;
+    private String  sex;
+    private String  phoneNumber;
+    private String  title;
+    private String  content;
+    private Integer subjectId;
 
     public String getStudentId() {
         return studentId;
@@ -58,11 +58,11 @@ public class StudentSubject {
         this.content = content;
     }
 
-    public int getSubjectId() {
+    public Integer getSubjectId() {
         return subjectId;
     }
 
-    public void setSubjectId(int subjectId) {
+    public void setSubjectId(Integer subjectId) {
         this.subjectId = subjectId;
     }
 }

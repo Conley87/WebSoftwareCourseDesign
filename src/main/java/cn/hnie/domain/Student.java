@@ -1,16 +1,15 @@
-package cn.hnie.pojo;
+package cn.hnie.domain;
 
 public class Student {
-    private String studentId=null;
-    private String password=null;
-    private String name=null;
-    private String sex=null;
-    private String department=null;
-    private String phoneNumber=null;
-    private String content=null;
-    private String teacherId=null;
-    private int subjectId;
-    private int age;
+    private String  studentId=null;
+    private String  password=null;
+    private String  name=null;
+    private String  sex=null;
+    private String  department=null;
+    private String  phoneNumber=null;
+    private String  teacherId=null;
+    private Integer subjectId=null;
+    private Integer age=null;
 
     public String getStudentId() {
         return studentId;
@@ -60,13 +59,7 @@ public class Student {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getContent() {
-        return content;
-    }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     public String getTeacherId() {
         return teacherId;
@@ -76,19 +69,19 @@ public class Student {
         this.teacherId = teacherId;
     }
 
-    public int getSubjectId() {
+    public Integer getSubjectId() {
         return subjectId;
     }
 
-    public void setSubjectId(int subjectId) {
+    public void setSubjectId(Integer subjectId) {
         this.subjectId = subjectId;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -101,7 +94,6 @@ public class Student {
                 ", sex='" + sex + '\'' +
                 ", department='" + department + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", content='" + content + '\'' +
                 ", teacherId='" + teacherId + '\'' +
                 ", subjectId=" + subjectId +
                 ", age=" + age +

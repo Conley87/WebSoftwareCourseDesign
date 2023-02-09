@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.hnie.mapper.StudentMapper">
+<mapper namespace="cn.hnie.dao.StudentDao">
     <resultMap id="SubjectResult" type="subject">
         <result property="teacherId" column="teacher_id"/>
         <result property="subjectId" column="subject_id"/>
@@ -14,17 +14,23 @@
         where student_id = #{id};
     </select>
     <select id="queryAllSubject" resultMap="SubjectResult">
-        select *
-        from subject;
+        select subject_id, title, content, subject.teacher_id as teacher_id, name
+        from subject
+                 JOIN teacher
+        where subject.teacher_id = teacher.teacher_id
     </select>
     <update id="selectSubject">
         update student
         set subject_id=#{subId}
         where student_id = #{stuId};
     </update>
-    <update id="submitSubject">
-        update student
-        set content=#{content}
-        where student_id = #{stuId}
+    <update id="updatePasswd">
+        update student set password=#{passwd}
+        where student_id=#{id}
     </update>
+    <!--    <update id="submitSubject">-->
+    <!--        update student-->
+    <!--        set content=#{content}-->
+    <!--        where student_id = #{stuId}-->
+    <!--    </update>-->
 </mapper>

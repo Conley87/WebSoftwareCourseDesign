@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.hnie.mapper.TeacherMapper">
+<mapper namespace="cn.hnie.dao.TeacherDao">
     <resultMap id="stu_sub" type="studentSubject">
         <result property="studentId" column="student_id"/>
         <result property="subjectId" column="subject.subject_id"/>
@@ -29,5 +29,10 @@
         update student
         set teacher_id=#{id}
         where student_id = #{stuId}
+    </update>
+    <update id="updatePasswd">
+        update teacher
+        set password=#{passwd}
+        where teacher_id=#{id}
     </update>
 </mapper>

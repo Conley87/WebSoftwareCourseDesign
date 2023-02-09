@@ -4,23 +4,23 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <properties>
-        <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:4260/coursea"/>
-        <property name="username" value="root"/>
-        <property name="password" value="2d=(IPPGpD(A"/>
-        <property name="maxActive" value="20"/>
-        <property name="initialSize" value="10"/>
-        <property name="minIdle" value="10"/>
+    <properties resource="druid.properties">
+<!--        <property name="driver" value="com.mysql.cj.jdbc.Driver"/>-->
+<!--        <property name="url" value="jdbc:mysql://localhost:4260/coursea"/>-->
+<!--        <property name="username" value="root"/>-->
+<!--        <property name="password" value="2d=(IPPGpD(A"/>-->
+<!--        <property name="maxActive" value="20"/>-->
+<!--        <property name="initialSize" value="10"/>-->
+<!--        <property name="minIdle" value="10"/>-->
     </properties>
     <!--使用别名可以在任何地方替代，一般用来替代方便得书写java bean-->
     <typeAliases>
-        <package name="cn.hnie.pojo"/>
+        <package name="cn.hnie.domain"/>
     </typeAliases>
     <environments default="druid">
         <environment id="druid">
             <transactionManager type="JDBC"/>
-            <dataSource type="cn.hnie.dao.DruidDataSourceFactory">
+            <dataSource type="cn.hnie.service.DruidDataSourceFactory">
                 <property name="driverClass" value="${driver}"/>
                 <property name="url" value="${url}"/>
                 <property name="username" value="${username}"/>
@@ -32,6 +32,6 @@
         </environment>
     </environments>
     <mappers>
-        <package name="cn.hnie.mapper"/>
+        <package name="cn.hnie.dao"/>
     </mappers>
 </configuration>

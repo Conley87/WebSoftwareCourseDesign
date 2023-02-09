@@ -1,110 +1,68 @@
 package cn.hnie.dao;
 
-import cn.hnie.mapper.ManagerMapper;
-import cn.hnie.pojo.Student;
-import cn.hnie.pojo.Teacher;
-import org.apache.ibatis.session.SqlSession;
+import cn.hnie.domain.Adjust;
+import cn.hnie.domain.Student;
+import cn.hnie.domain.Teacher;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+/**
+ * 验证管理员登录<br/>
+ * 查询教师和学生的所有信息<br/>
+ * 修改教师和学生的密码<br/>
+ */
+@Mapper
+public interface ManagerDao {
+    /**
+     * 根据管理员id返回密码
+     * @param adminID 管理员id
+     * @return 密码
+     */
+    String login(String adminID);
 
-public class ManagerDao {
+    /**
+     * 插入学生
+     */
+    int insertStudent(Student s);
+    /**
+     * 通过id删除学生
+     */
+    int deleteStudentById(String id);
+    /**
+     * 通过id查询学生
+     */
+    Student selectStudentById(String id);
+    /**
+     * 查询所有学生
+     */
+    List<Student> selectStudentAll();
 
-    //管理员登录
-    public static boolean login(String adminID, String password) {
-        SqlSession session = DBUtils.getSession(true);
-        ManagerMapper mapper = session.getMapper(ManagerMapper.class);
-        String passwd = mapper.login(adminID);
-        session.close();
-        return passwd != null && passwd.equals(password);
-    }
+    int updateStudent(Student s);
 
-    //插入学生
-    public static boolean insertStudent(Student s) {
-        SqlSession session = DBUtils.getSession(true);
-        ManagerMapper mapper = session.getMapper(ManagerMapper.class);
-        boolean b = mapper.insertStudent(s) == 1;
-        session.close();
-        return b;
-    }
+    /**
+     * 插入教师信息
+     */
+    int insertTeacher(Teacher t);
+    /**
+     * 通过id删除教师
+     */
+    int deleteTeacherById(String id);
+    /**
+     * 通过id查询教师
+     */
+    Teacher selectTeacherById(String id);
+    /**
+     * 查询所有教师信息
+     */
+    List<Teacher> selectTeacherAll();
+    /**
+     * 更新教师信息
+     */
+    int updateTeacher(Teacher t);
 
-    //通过id删除学生
-    public static boolean deleteStudentById(String id) {
-        SqlSession session = DBUtils.getSession(true);
-        ManagerMapper mapper = session.getMapper(ManagerMapper.class);
-        boolean b = mapper.deleteStudentById(id) == 1;
-        session.close();
-        return b;
-    }
+    //调整毕设结果
+    List<Adjust> adjust();
 
-    //通过id查找学生
-    public static Student selectStudentById(String id) {
-        SqlSession session = DBUtils.getSession(true);
-        ManagerMapper mapper = session.getMapper(ManagerMapper.class);
-        Student s = mapper.selectStudentById(id);
-        session.close();
-        return s;
-    }
-
-    //查找所有学上
-    public static List<Student> selectStudentAll() {
-        SqlSession session = DBUtils.getSession(true);
-        ManagerMapper mapper = session.getMapper(ManagerMapper.class);
-        List<Student> list = mapper.selectStudentAll();
-        session.close();
-        return list;
-    }
-
-    //更新学生信息
-    public static boolean updateStudent(Student s) {
-        SqlSession session = DBUtils.getSession(true);
-        ManagerMapper mapper = session.getMapper(ManagerMapper.class);
-        boolean b = mapper.updateStudent(s) == 1;
-        session.close();
-        return b;
-    }
-
-    //插入教师
-    public static boolean insertTeacher(Teacher teacher) {
-        SqlSession session = DBUtils.getSession(true);
-        ManagerMapper mapper = session.getMapper(ManagerMapper.class);
-        boolean b = mapper.insertTeacher(teacher) == 1;
-        session.close();
-        return b;
-    }
-
-    //通过id删除教师
-    public static boolean deleteTeacher(String id) {
-        SqlSession session = DBUtils.getSession(true);
-        ManagerMapper mapper = session.getMapper(ManagerMapper.class);
-        boolean b = mapper.deleteTeacherById(id) == 1;
-        session.close();
-        return b;
-    }
-
-    //通过id查找教师
-    public static Teacher selectTeacherById(String id) {
-        SqlSession session = DBUtils.getSession(true);
-        ManagerMapper mapper = session.getMapper(ManagerMapper.class);
-        Teacher teacher = mapper.selectTeacherById(id);
-        session.close();
-        return teacher;
-    }
-
-    //查找所有教师
-    public static List<Teacher> selectTeacherAll() {
-        SqlSession session = DBUtils.getSession(true);
-        ManagerMapper mapper = session.getMapper(ManagerMapper.class);
-        List<Teacher> list = mapper.selectTeacherAll();
-        session.close();
-        return list;
-    }
-
-    //更新教师信息
-    public static boolean updateTeacher(Teacher t) {
-        SqlSession session = DBUtils.getSession(true);
-        ManagerMapper mapper = session.getMapper(ManagerMapper.class);
-        boolean b = mapper.updateTeacher(t) == 1;
-        session.close();
-        return b;
-    }
+    int updatePasswd(@Param("id") String id,@Param("passwd") String passwd);
 }

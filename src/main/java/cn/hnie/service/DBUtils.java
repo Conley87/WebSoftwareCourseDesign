@@ -1,4 +1,4 @@
-package cn.hnie.dao;
+package cn.hnie.service;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +8,9 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * 该类用来获取sqlSession
+ */
 public class DBUtils {
     private static SqlSessionFactory FACTORY;
 

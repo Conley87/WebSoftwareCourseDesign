@@ -1,45 +1,21 @@
 package cn.hnie.dao;
 
-import cn.hnie.mapper.StudentMapper;
-import cn.hnie.pojo.Subject;
-import org.apache.ibatis.session.SqlSession;
+import cn.hnie.domain.Subject;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public class StudentDao {
-    //学生登录
-    public static boolean login(String StudentId, String password) {
-        SqlSession session = DBUtils.getSession(true);
-        StudentMapper mapper = session.getMapper(StudentMapper.class);
-        String passwd = mapper.login(StudentId);
-        session.close();
-        return passwd != null && passwd.equals(password);
-    }
-
-    //查看所有发布的题目
-    public static List<Subject> queryAllSubject() {
-        SqlSession session = DBUtils.getSession(true);
-        StudentMapper mapper = session.getMapper(StudentMapper.class);
-        List<Subject> subjects = mapper.queryAllSubject();
-        session.close();
-        return subjects;
-    }
-
+@Mapper
+public interface StudentDao {
+    //登录
+    String login(String studentId);
+    //查看题目
+    List<Subject> queryAllSubject();
     //选择题目
-    public static boolean selectSubject(String stuId, int subId) {
-        SqlSession session = DBUtils.getSession(true);
-        StudentMapper mapper = session.getMapper(StudentMapper.class);
-        boolean b = mapper.selectSubject(stuId, subId) == 1;
-        session.close();
-        return b;
-    }
+    int selectSubject(@Param("stuId") String stuId, @Param("subId") int subId);
 
-    //提交题目，将提交的文件保存到/WEB-INF/upload/studentId/ 下
-    public static boolean submitSubject(String content, String stuId) {
-        SqlSession session = DBUtils.getSession(true);
-        StudentMapper mapper = session.getMapper(StudentMapper.class);
-        boolean b = mapper.submitSubject(content, stuId) == 1;
-        session.close();
-        return b;
-    }
+    // 修改密码
+    int updatePasswd(@Param("id") String id,@Param("passwd") String passwd);
+//    int submitSubject(@Param("content") String content,@Param("stuId") String stuId);
 }

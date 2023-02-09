@@ -1,4 +1,4 @@
-package cn.hnie.dao;
+package cn.hnie.service;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.datasource.DataSourceFactory;
@@ -6,6 +6,9 @@ import org.apache.ibatis.datasource.DataSourceFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * mybatis用来获取Druid的数据源
+ */
 public class DruidDataSourceFactory implements DataSourceFactory {
     private static DruidDataSource druid;
     private Properties properties;

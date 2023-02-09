@@ -1,16 +1,25 @@
-package cn.hnie.pojo;
+package cn.hnie.domain;
 
 public class Subject {
-    private int subjectId=0;
-    private String teacherId=null;
-    private String title=null;
-    private String content=null;
+    private Integer subjectId;
+    private String  teacherId;
+    private String  title;
+    private String  content;
+    private String  name;
 
-    public int getSubjectId() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getSubjectId() {
         return subjectId;
     }
 
-    public void setSubjectId(int subjectId) {
+    public void setSubjectId(Integer subjectId) {
         this.subjectId = subjectId;
     }
 
@@ -45,6 +54,7 @@ public class Subject {
                 ", teacherId='" + teacherId + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }
