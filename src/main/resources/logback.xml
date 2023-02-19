@@ -32,7 +32,7 @@
     </appender>
 
     <!--"com.dl.test"包下的类的日志 -->
-    <logger name="com.dl.testjdbc.mapper" level="debug"  additivity="false">
+    <logger name="cn.hnie.dao" level="all"  additivity="false">
         <!--日志输出级别-->
         <!--        <level value="debug"/>-->
         <appender-ref ref="console"/>
@@ -40,7 +40,7 @@
     <!--root级别 DEBUG -->
     <root>
         <!-- 打印debug级别日志及以上级别日志 -->
-        <level value="all" />
+        <level value="error" />
         <!-- 控制台输出 -->
         <appender-ref ref="console" />
         <!-- 文件输出 -->

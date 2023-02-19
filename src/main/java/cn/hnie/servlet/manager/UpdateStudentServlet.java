@@ -17,6 +17,7 @@ public class UpdateStudentServlet extends HttpServlet {
             throws ServletException, IOException {
         String s = request.getReader().readLine();
         Student student = JSONObject.parseObject(s, Student.class);
+        System.out.println(student);
         Result result;
         response.setContentType("application/json;charset=utf-8");
 

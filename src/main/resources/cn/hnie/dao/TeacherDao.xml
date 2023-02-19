@@ -5,9 +5,9 @@
 <mapper namespace="cn.hnie.dao.TeacherDao">
     <resultMap id="stu_sub" type="studentSubject">
         <result property="studentId" column="student_id"/>
-        <result property="subjectId" column="subject.subject_id"/>
+<!--        <result property="subjectId" column="subject.subject_id"/>-->
         <result property="phoneNumber" column="phone_number"/>
-        <result property="content" column="subject.content"/>
+<!--        <result property="content" column="subject.content"/>-->
     </resultMap>
     <select id="login" resultType="string">
         select password
@@ -19,7 +19,7 @@
         VALUES (#{teacherId}, #{title}, #{content})
     </insert>
     <select id="queryStudent" resultMap="stu_sub">
-        select student_id, name, sex, phone_number, title, subject.content, subject.subject_id
+        select student_id, name, sex, phone_number, title, subject.content as content, subject.subject_id as subjectId
         from student,
              subject
         where student.subject_id = subject.subject_id

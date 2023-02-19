@@ -18,6 +18,7 @@ public class UpdateTeacherServlet extends HttpServlet {
         String s = request.getReader().readLine();
         Teacher teacher = JSONObject.parseObject(s, Teacher.class);
         Result result;
+        response.setContentType("application/json;charset=utf-8");
 
         if (teacher==null) {
             result = new Result("200","请添加正确的教师信息");

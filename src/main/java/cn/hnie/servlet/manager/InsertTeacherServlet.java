@@ -29,6 +29,8 @@ public class InsertTeacherServlet extends HttpServlet {
             return;
         }
 
+        teacher.setPassword("12345");
+
         boolean b = ManagerService.insertTeacher(teacher);
         if (b) {
             result = new Result("200","教师添加成功");

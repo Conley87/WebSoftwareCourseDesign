@@ -32,7 +32,7 @@ public interface ManagerDao {
     /**
      * 通过id查询学生
      */
-    Student selectStudentById(String id);
+    List<Student> selectStudentById(String id);
     /**
      * 查询所有学生
      */
@@ -51,7 +51,7 @@ public interface ManagerDao {
     /**
      * 通过id查询教师
      */
-    Teacher selectTeacherById(String id);
+    List<Teacher> selectTeacherById(String id);
     /**
      * 查询所有教师信息
      */

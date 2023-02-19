@@ -43,10 +43,10 @@ public class ManagerService {
     }
 
     // 通过id查找学生
-    public static Student selectStudentById(String id) {
+    public static List<Student> selectStudentById(String id) {
         SqlSession session = DBUtils.getSession(true);
         ManagerDao mapper = session.getMapper(ManagerDao.class);
-        Student s = mapper.selectStudentById(id);
+        List<Student> s = mapper.selectStudentById(id);
         session.close();
         return s;
     }
@@ -92,10 +92,10 @@ public class ManagerService {
     }
 
     // 通过id查找教师
-    public static Teacher selectTeacherById(String id) {
+    public static List<Teacher> selectTeacherById(String id) {
         SqlSession session = DBUtils.getSession(true);
         ManagerDao mapper = session.getMapper(ManagerDao.class);
-        Teacher teacher = mapper.selectTeacherById(id);
+        List<Teacher> teacher = mapper.selectTeacherById(id);
         session.close();
         return teacher;
     }

@@ -1,12 +1,18 @@
 package cn.hnie.servlet.manager;
 
-import cn.hnie.service.ManagerService;
 import cn.hnie.domain.Adjust;
-import org.apache.poi.hssf.usermodel.*;
+import cn.hnie.service.ManagerService;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -58,7 +64,7 @@ public class DownloadServlet extends HttpServlet {
             workbook.write(outputStream);
             outputStream.flush();
             outputStream.close();
-        }catch (RuntimeException | IOException e) {
+        } catch (RuntimeException | IOException e) {
             ;
         }
     }
@@ -66,6 +72,6 @@ public class DownloadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request,response);
+        doGet(request, response);
     }
 }

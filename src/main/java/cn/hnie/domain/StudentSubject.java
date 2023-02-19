@@ -1,12 +1,12 @@
 package cn.hnie.domain;
 
 public class StudentSubject {
-    private String  studentId;
-    private String  name;
-    private String  sex;
-    private String  phoneNumber;
-    private String  title;
-    private String  content;
+    private String studentId;
+    private String name;
+    private String sex;
+    private String phoneNumber;
+    private String title;
+    private String content;
     private Integer subjectId;
 
     public String getStudentId() {
@@ -64,5 +64,18 @@ public class StudentSubject {
 
     public void setSubjectId(Integer subjectId) {
         this.subjectId = subjectId;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentSubject{" +
+                "studentId='" + studentId + '\'' +
+                ", name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", subjectId=" + subjectId +
+                '}';
     }
 }

@@ -15,18 +15,18 @@ import java.io.IOException;
 /**
  * 教师登录
  */
-@WebServlet(name = "TeacherLoginServlet", value = "/TeacherLogin")
+@WebServlet(name = "TeacherLoginServlet", value = "/TeacherServlet")
 public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String teacherId = request.getParameter("teacherId");
+        String teacherId = request.getParameter("user");
         String password = request.getParameter("password");
         HttpSession session = request.getSession();
         Result result;
         if (TeacherService.login(teacherId, password)) {
-            session.setAttribute("tTeacherFlag","true");
+            session.setAttribute("TeacherFlag","true");
             session.setAttribute("teacherId",teacherId);
             result = new Result("200");
         }else{

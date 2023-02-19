@@ -21,8 +21,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String adminID = req.getParameter("adminID");
-        String passwd = req.getParameter("passwd");
+        String adminID = req.getParameter("user");
+        String passwd = req.getParameter("password");
 
         HttpSession session = req.getSession();
         resp.setContentType("application/json;charset=utf-8");

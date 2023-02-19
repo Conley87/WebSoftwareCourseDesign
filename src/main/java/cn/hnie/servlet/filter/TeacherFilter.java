@@ -23,6 +23,6 @@ public class TeacherFilter implements Filter {
         if (TeacherFlag != null && TeacherFlag.equals("true"))
             chain.doFilter(request, response);
         else
-            hsrp.sendRedirect("/teacher.html");
+            hsrp.sendRedirect("/CourseDesign/login.html");
     }
 }

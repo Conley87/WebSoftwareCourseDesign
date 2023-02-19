@@ -1,14 +1,16 @@
 package cn.hnie.servlet.student;
 
 import cn.hnie.domain.Result;
-import cn.hnie.service.StudentService;
 import cn.hnie.domain.Subject;
+import cn.hnie.service.StudentService;
 import com.alibaba.fastjson2.JSONArray;
-import org.apache.poi.ss.formula.EvaluationWorkbook;
+import com.alibaba.fastjson2.JSONWriter;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,17 +22,19 @@ public class QuerySubjectServlet extends HttpServlet {
             throws ServletException, IOException {
         List<Subject> subjects = StudentService.queryAllSubject();
         Result result;
-        if (subjects!=null) {
-            result = new Result("200",subjects.toArray());
-        }
-        else
-            result = new Result("2001",null,"数据为空");
-        response.getWriter().write(JSONArray.toJSONString(result));
+
+        response.setContentType("application/json;charset=utf-8");
+
+        if (subjects != null) {
+            result = new Result("200", subjects.toArray());
+        } else
+            result = new Result("2001", null, "数据为空");
+        response.getWriter().write(JSONArray.toJSONString(result, JSONWriter.Feature.WriteMapNullValue));
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request,response);
+        doGet(request, response);
     }
 }

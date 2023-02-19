@@ -23,8 +23,9 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String studentID = request.getParameter("studentID");
+        String studentID = request.getParameter("user");
         String password = request.getParameter("password");
+        System.out.println(studentID+"\n"+password);
         Result result;
         if (StudentService.login(studentID, password)) {
             session.setAttribute("StudentFlag","true");

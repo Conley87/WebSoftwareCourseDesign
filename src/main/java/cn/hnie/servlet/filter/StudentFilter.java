@@ -27,7 +27,7 @@ public class StudentFilter implements Filter {
         if (studentFlag != null && studentFlag.equals("true"))
             chain.doFilter(request, response);
         else
-            hsrp.sendRedirect("/student.html");
+            hsrp.sendRedirect("/CourseDesign/login.html");
 
     }
 }

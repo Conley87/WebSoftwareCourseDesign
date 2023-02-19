@@ -17,11 +17,10 @@ public class SelectStudentServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String teacherId =(String) session.getAttribute("teacherId");
-//        String teacherId = request.getParameter("teacherId");
 
         Result result;
 
-        String[] stu= request.getParameterValues("stu");
+        String[] stu= request.getParameterValues("id");
         int i = TeacherService.selectStudent(teacherId, stu);
         if (i!=0) {
             result = new Result("200","成功添加"+i+"名学生");
