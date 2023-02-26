@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hnie.dao.ManagerDao">
+    <resultMap id="studentResult" type="student">
+        <result property="teacherId" column="teacher_id"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="studentId" column="student_id"/>
+        <result property="subjectId" column="subject_id"/>
+    </resultMap>
+    <resultMap id="teacherResult" type="teacher">
+        <result property="teacherId" column="teacher_id"/>
+        <result property="phoneNumber" column="phone_number"/>
+    </resultMap>
+    <resultMap id="managerResult" type="manager">
+        <result property="adminID" column="admin_id"/>
+        <result property="phoneNumber" column="phone_number"/>
+    </resultMap>
+    <select id="login" resultType="string">
+        select password
+        from manager
+        where admin_id = #{id}
+    </select>
+
+
+    <insert id="insertStudent" parameterType="student">
+        insert into student
+        values (#{studentId}, #{password}, #{name}, #{teacherId}, #{age}, #{sex}, #{department}, #{phoneNumber},
+                #{subjectId})
+    </insert>
+    <delete id="deleteStudentById">
+        delete
+        from student
+        where student_id = #{id};
+    </delete>
+    <select id="selectStudentById" resultMap="studentResult">
+        select *
+        from student
+        where student_id = #{id}
+    </select>
+    <select id="selectStudentAll" resultMap="studentResult">
+        select *
+        from student;
+    </select>
+    <update id="updateStudent" parameterType="student">
+        update student
+        <set>
+            <if test="password != null">password = #{password},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="teacherId != null and teacherId != ''">teacher_id = #{teacherId},</if>
+            <if test="age > 0">age =#{age},</if>
+            <if test="sex != null and sex != ''">sex =#{sex},</if>
+            <if test="department != null and department != ''">department =#{department},</if>
+            <if test="phoneNumber != null and phoneNumber != ''">phone_number = #{phoneNumber},</if>
+            <if test="subjectId >0">subject_id = #{subjectId},</if>
+        </set>
+        where student_id=#{studentId}
+    </update>
+
+
+    <insert id="insertTeacher" parameterType="teacher">
+        insert into teacher
+        values (#{teacherId}, #{password}, #{name}, #{age}, #{department}, #{phoneNumber});
+    </insert>
+    <delete id="deleteTeacherById">
+        delete
+        from teacher
+        where teacher_id = #{id};
+    </delete>
+    <select id="selectTeacherById" resultMap="teacherResult">
+        select *
+        from teacher
+        where teacher_id = #{id};
+    </select>
+    <select id="selectTeacherAll" resultMap="teacherResult">
+        select *
+        from teacher;
+    </select>
+    <update id="updateTeacher">
+        update teacher
+        <set>
+            <if test="password != null">password =#{password},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="age >0">age = #{age},</if>
+            <if test="department != null and department != ''">department = #{department},</if>
+            <if test="phoneNumber != null and phoneNumber != ''">phone_number =#{phoneNumber}</if>
+        </set>
+        where teacher_id=#{teacherId}
+    </update>
+    <update id="updatePasswd">
+        update manager
+        set password=#{passwd}
+        where admin_id = #{id}
+    </update>
+
+    <select id="adjust" resultType="adjust">
+        select student.student_id as stuId,
+               student.name       as name,
+               subject.subject_id as subId,
+               subject.title      as title,
+               teacher.name       as teaName
+        from student,
+             teacher,
+             subject
+        where student.subject_id = subject.subject_id
+          and subject.teacher_id = teacher.teacher_id;
+    </select>
+</mapper>

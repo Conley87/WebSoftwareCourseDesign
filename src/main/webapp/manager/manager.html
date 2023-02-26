@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager</title>
+    <link rel="stylesheet" type="text/css" href="../webClient.css">
+    <script src="https://npm.elemecdn.com/granim@2.0.0/dist/granim.min.js"></script>
+    <script src="../publicfun.js" type="text/javascript"></script>
+    <script>
+        window.onload = function () {
+            searchStus();
+            addModifyStu();
+            deleteStu();
+
+            searchTeas();
+            addModifyTea();
+            deleteTea();
+        }
+
+        function searchStus() {
+            // 获取表单元素和提交按钮
+            const form = document.querySelector('.unit #searchStudents');
+            const submitButton = form.querySelector('input[type="submit"]');
+
+            // 添加提交事件监听器
+            form.addEventListener('submit', (event) => {
+                // 防止默认提交行为
+                event.preventDefault();
+
+                // 获取输入字段值
+                const id = form.elements['id'].value;
+
+                fetch(`/CourseDesign/manager/QueryStudentById?id=${id}`, {
+                    method: 'get',
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('表单提交成功', data);
+
+                        const rows = data.data.map(row => {
+                            return `<tr>
+                                <td onclick="">${row.studentId}</td>
+                                <td>${row.password}</td>
+                                <td>${row.name}</td>
+                                <td>${row.age}</td>
+                                <td>${row.sex}</td>
+                                <td>${row.department}</td>
+                                <td>${row.phoneNumber}</td>
+                                <td>${row.subjectId}</td>
+                                <td>${row.teacherId}</td>
+                                </tr>`;
+                        });
+
+                        document.getElementById('stutable').querySelector('tbody').innerHTML = rows.join('');
+                    })
+                    .catch(error => {
+                        console.error('表单提交错误', error);
+                    });
+            });
+        }
+
+        function addModifyStu() {
+            // 获取表单元素和提交按钮
+            const form = document.querySelector('.unit #AddModifyStudents');
+            const addButton = form.querySelector('input[id="ADD"]');
+            const modifyButton = form.querySelector('input[id="MODIFY"]');
+
+            //ADD按钮添加点击事件
+            addButton.addEventListener('click', () => {
+                // 获取输入字段值
+                const id = form.elements['id'].value;
+                const name = form.elements['name'].value;
+                const sex = form.elements['sex'].value;
+                const age = form.elements['age'].value;
+                const subjectId = form.elements['subject_id'].value;
+                const department = form.elements['department'].value;
+                const phoneNumber = form.elements['phone_number'].value;
+                const teacherId = form.elements['teacher_id'].value;
+
+                // 将值打包为 JSON 对象
+                const formData = {
+                    studentId: id,
+                    name: name,
+                    sex: sex,
+                    age: age,
+                    subjectId: subjectId,
+                    department: department,
+                    phoneNumber: phoneNumber,
+                    teacherId: teacherId
+                };
+
+                // 使用 Fetch API 发送 POST 请求
+                fetch('/CourseDesign/manager/InsertStudentServlet', {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('提交表单失败！');
+                        }
+                    })
+                    .then(data => {
+                        console.log('表单提交成功', data);
+                        alert(data.msg);
+                    })
+                    .catch(error => {
+                        console.error('表单提交错误', error);
+                    });
+            });
+
+            //MODIFY按钮添加点击事件
+            modifyButton.addEventListener('click', () => {
+                // 获取输入字段值innerHTML
+                const id = form.elements['id'].value;
+                const name = form.elements['name'].value;
+                const sex = form.elements['sex'].value;
+                const age = form.elements['age'].value;
+                const subjectId = form.elements['subject_id'].value;
+                const department = form.elements['department'].value;
+                const phoneNumber = form.elements['phone_number'].value;
+                const teacherId = form.elements['teacher_id'].value;
+
+                // 将值打包为 JSON 对象
+                const formData = {
+                    studentId: id,
+                    name: name,
+                    sex: sex,
+                    age: age,
+                    subjectId: subjectId,
+                    department: department,
+                    phoneNumber: phoneNumber,
+                    teacherId: teacherId
+                };
+
+                // 使用 Fetch API 发送 POST 请求
+                fetch('/CourseDesign/manager/UpdateStudentServlet', {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('提交表单失败！');
+                        }
+                    })
+                    .then(data => {
+                        console.log('表单提交成功', data);
+                        alert(data.msg);
+                    })
+                    .catch(error => {
+                        console.error('表单提交错误', error);
+                    });
+            });
+        }
+
+        function deleteStu() {
+            // 获取表单元素和提交按钮
+            const form = document.querySelector('.unit #DeleteStudents');
+            const submitButton = form.querySelector('input[type="submit"]');
+
+            // 添加提交事件监听器
+            form.addEventListener('submit', (event) => {
+                // 防止默认提交行为
+                event.preventDefault();
+
+                // 获取输入字段值
+                const id = form.elements['id'].value;
+
+                // 使用 Fetch API 发送 POST 请求
+                fetch(`/CourseDesign/manager/DeleteStudentServlet?id=${id}`, {
+                    method: 'get',
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('提交表单失败！');
+                        }
+                    })
+                    .then(data => {
+                        console.log('表单提交成功', data);
+                        alert(data.msg);
+                    })
+                    .catch(error => {
+                        console.error('表单提交错误', error);
+                    });
+            });
+        }
+
+        function searchTeas() {
+            // 获取表单元素和提交按钮
+            const form = document.querySelector('.unit #searchTeachers');
+            const submitButton = form.querySelector('input[type="submit"]');
+
+            // 添加提交事件监听器
+            form.addEventListener('submit', (event) => {
+                // 防止默认提交行为
+                event.preventDefault();
+
+                // 获取输入字段值
+                const id = form.elements['id1'].value;
+
+                // 使用 Fetch API 发送 POST 请求
+                fetch(`/CourseDesign/manager/QueryTeacherByIdServlet?id=${id}`, {
+                    method: 'get',
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('表单提交成功', data);
+
+                        const rows = data.data.map(row => {
+                            return `<tr>
+                                <td onclick="">${row.teacherId}</td>
+                                <td>${row.password}</td>
+                                <td>${row.name}</td>
+                                <td>${row.age}</td>
+                                <td>${row.phoneNumber}</td>
+                                <td>${row.department}</td>
+                                </tr>`;
+                        });
+
+                        document.getElementById('teatable').querySelector('tbody').innerHTML = rows.join('');
+                    })
+                    .catch(error => {
+                        console.error('表单提交错误', error);
+                    });
+            });
+        }
+
+        function addModifyTea() {
+            // 获取表单元素和提交按钮
+            const form = document.querySelector('.unit #AddModifyTeachers');
+            const addButton = form.querySelector('input[id="ADD1"]');
+            const modifyButton = form.querySelector('input[id="MODIFY1"]');
+
+            //ADD按钮添加点击事件
+            addButton.addEventListener('click', () => {
+                // 获取输入字段值
+                const id = form.elements['id1'].value;
+                const name = form.elements['name1'].value;
+                const age = form.elements['age1'].value;
+                const department = form.elements['department1'].value;
+                const phoneNumber = form.elements['phoneNumber1'].value;
+
+                // 将值打包为 JSON 对象
+                const formData = {
+                    teacherId: id,
+                    name: name,
+                    age: age,
+                    department: department,
+                    phoneNumber: phoneNumber,
+                };
+
+                // 使用 Fetch API 发送 POST 请求
+                fetch('/CourseDesign/manager/InsertTeacherServlet', {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('提交表单失败！');
+                        }
+                    })
+                    .then(data => {
+                        console.log('表单提交成功', data);
+                        alert(data.msg);
+                    })
+                    .catch(error => {
+                        console.error('表单提交错误', error);
+                    });
+            });
+
+            //MODIFY按钮添加点击事件
+            modifyButton.addEventListener('click', () => {
+                // 获取输入字段值
+                const id = form.elements['id1'].value;
+                const name = form.elements['name1'].value;
+                const age = form.elements['age1'].value;
+                const department = form.elements['department1'].value;
+                const phoneNumber = form.elements['phoneNumber1'].value;
+
+                // 将值打包为 JSON 对象
+                const formData = {
+                    teacherId: id,
+                    name: name,
+                    age: age,
+                    department: department,
+                    phoneNumber: phoneNumber,
+                };
+
+                // 使用 Fetch API 发送 POST 请求
+                fetch('/CourseDesign/manager/UpdateTeacherServlet', {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('提交表单失败！');
+                        }
+                    })
+                    .then(data => {
+                        console.log('表单提交成功', data);
+                        alert(data.msg);
+                    })
+                    .catch(error => {
+                        console.error('表单提交错误', error);
+                    });
+            });
+        }
+
+        function deleteTea() {
+            // 获取表单元素和提交按钮
+            const form = document.querySelector('.unit #DeleteTeachers');
+            const submitButton = form.querySelector('input[type="submit"]');
+
+            // 添加提交事件监听器
+            form.addEventListener('submit', (event) => {
+                // 防止默认提交行为
+                event.preventDefault();
+
+                // 获取输入字段值
+                const id = form.elements['id1'].value;
+
+                // 使用 Fetch API 发送 POST 请求
+                fetch(`/CourseDesign/manager/DeleteTeacherServlet?id=${id}`, {
+                    method: 'get',
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('提交表单失败！');
+                        }
+                    })
+                    .then(data => {
+                        console.log('表单提交成功', data);
+                        alert(data.msg);
+                    })
+                    .catch(error => {
+                        console.error('表单提交错误', error);
+                    });
+            });
+        }
+
+        function getResult() {
+            fetch('/CourseDesign/manager/QuerySubjectResultServlet')
+                .then(response => response.json())
+                .then(data => {
+                    const rows = data.data.map(row => {
+                        return `<tr>
+                                <td>${row.stuId}</td>
+                                <td>${row.name}</td>
+                                <td>${row.subId}</td>
+                                <td>${row.title}</td>
+                                <td>${row.teaName}</td>
+                                </tr>`;
+                    })
+
+                    document.getElementById('restable').querySelector('tbody').innerHTML = rows.join('');
+                })
+                .catch(error => console.error(error))
+        }
+    </script>
+</head>
+
+<body>
+<canvas id="canvas-basic"></canvas>
+<script>
+    var granimInstance = new Granim({
+        element: '#canvas-basic',
+        direction: 'left-right',
+        isPausedWhenNotInView: true,
+        states: {
+            "default-state": {
+                gradients: [
+                    ['#a18cd1', '#fbc2eb'],
+                    ['#fff1eb', '#ace0f9'],
+                    ['#d4fc79', '#96e6a1'],
+                    ['#a1c4fd', '#c2e9fb'],
+                    ['#a8edea', '#fed6e3'],
+                    ['#9890e3', '#b1f4cf'],
+                    ['#a1c4fd', '#c2e9fb'],
+                    ['#fff1eb', '#ace0f9']
+                ]
+            }
+        }
+    });
+</script>
+<div class="container">
+    <div class="top">
+        <img class="title" src="../Title.png">
+        <ul class="topbar">
+            <li><a href="#">管理员</a></li>
+            <li><a href="/CourseDesign/Logout">登出</a></li>
+        </ul>
+    </div>
+    <div class="main">
+        <div class="sidebar">
+            <div>
+                <ul class="menu">
+                    <li id="1" onclick="menuTest(this)">
+                        <span>学生管理</span>
+                    </li>
+                    <li id="2" onclick="menuTest(this)">
+                        <span>教师管理</span>
+                    </li>
+                    <li id="3" onclick="menuTest(this);getResult()">
+                        <span>选题结果管理</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content">
+            <div class="cont" id="cont1" name="Student">
+                <table id="stutable" cellspacing="0" cellpadding="5">
+                    <thead>
+                    <tr>
+                        <td>学生ID</td>
+                        <td>密码</td>
+                        <td>姓名</td>
+                        <td>年龄</td>
+                        <td>性别</td>
+                        <td>所在系</td>
+                        <td>联系电话</td>
+                        <td>课题ID</td>
+                        <td>导师ID</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td onclick="alert(`hello`)">1</td>
+                        <td>1</td>
+                        <td>aaa</td>
+                        <td>nan</td>
+                        <td>11</td>
+                        <td>21241</td>
+                        <td>department</td>
+                        <td>114514</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>aaa</td>
+                        <td>nan</td>
+                        <td>11</td>
+                        <td>21241</td>
+                        <td>department</td>
+                        <td>114514</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>aaa</td>
+                        <td>nan</td>
+                        <td>11</td>
+                        <td>21241</td>
+                        <td>department</td>
+                        <td>114514</td>
+                        <td>1</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="unit">
+                    <p>查找学生</p>
+                    <form id="searchStudents">
+                        <input class="input" id="id" placeholder=" ID"/>
+                        <input type="submit" class="search" value="Search"/>
+                    </form>
+                    <br>
+                    <span style="font-size: 14px;color: rgb(244, 67, 247);">PS:不输入ID为查找所有学生</span>
+                </div>
+                <hr>
+                <div class="unit">
+                    <p>增加和修改</p>
+                    <form id="AddModifyStudents">
+                        <div>
+                            <!-- 点击获取id -->
+                            <label for="id">ID:</label>
+                            <input class="input" id="id" name="id" placeholder="ID"/>
+                            <br>
+                        </div>
+                        <div>
+                            <label for="name">name:</label>
+                            <input class="input" id="name" name="name" placeholder="name"/>
+                            <br>
+                        </div>
+                        <div>
+                            <label for="sex">sex:</label>
+                            <select id="sex" name="sex" class="input">
+                                <option value="男">男性</option>
+                                <option value="女">女性</option>
+                            </select>
+                            <br>
+                        </div>
+                        <div>
+                            <label for="age">age:</label>
+                            <input class="input" id="age" name="age" placeholder="age"/>
+                            <br>
+                        </div>
+                        <div>
+                            <label for="subject_id">subjectId:</label>
+                            <input class="input" id="subject_id" name="subject_id" placeholder="subjectId"/>
+                            <br>
+                        </div>
+                        <div>
+                            <label for="department">department:</label>
+                            <input class="input" id="department" name="department" placeholder="department"/>
+                            <br>
+                        </div>
+                        <div>
+                            <label for="phone_number">phoneNumber:</label>
+                            <input class="input" id="phone_number" name="phone_number" placeholder="phoneNumber"/>
+                            <br>
+                        </div>
+                        <div>
+                            <label for="teacher_id">teacherId:</label>
+                            <input class="input" id="teacher_id" name="teacher_id" placeholder="teacherId"/>
+                            <br>
+                        </div>
+                        <input type="button" id="ADD" class="search" value="ADD"/>
+                        <input type="button" id="MODIFY" class="search" value="MODIFY"/>
+                    </form>
+                </div>
+                <hr>
+                <div class="unit">
+                    <p>删除学生</p>
+                    <form id="DeleteStudents">
+                        <input class="input" id="id" placeholder="ID"/>
+                        <input type="submit" class="search" value="DELETE"/>
+                    </form>
+                    <br>
+                </div>
+                <hr>
+            </div>
+            <div class="cont" id="cont2" name="Teacher">
+                <table id="teatable" cellspacing="0" cellpadding="5">
+                    <thead>
+                    <tr>
+                        <td>教师ID</td>
+                        <td>密码</td>
+                        <td>姓名</td>
+                        <td>年龄</td>
+                        <td>联系电话</td>
+                        <td>所在系</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <div class="unit">
+                    <p>查找教师</p>
+                    <form id="searchTeachers">
+                        <input class="input" id="id1" placeholder="ID"/>
+                        <input type="submit" class="search" value="Search"/>
+                    </form>
+                    <br>
+                    <span style="font-size: 14px;color: rgb(244, 67, 247);">PS:不输入ID为查找所有教师</span>
+                </div>
+                <hr>
+                <div class="unit">
+                    <p>增加和修改</p>
+                    <form id="AddModifyTeachers">
+                        <div>
+                            <label>教师ID:</label>
+                            <input class="input" id="id1" placeholder="ID"/><br>
+                        </div>
+                        <div>
+                            <label>姓名:</label>
+                            <input class="input" id="name1" placeholder="name"/><br>
+                        </div>
+                        <div>
+                            <label>年龄:</label>
+                            <input class="input" id="age1" placeholder="age"/><br>
+                        </div>
+                        <div>
+                            <label>所在系:</label>
+                            <input class="input" id="department1" placeholder="department"/><br>
+                        </div>
+                        <div>
+                            <label>联系电话:</label>
+                            <input class="input" id="phoneNumber1" placeholder="phoneNumber"/><br>
+                        </div>
+                        <input type="button" id="ADD1" class="search" value="ADD"/>
+                        <input type="button" id="MODIFY1" class="search" value="MODIFY"/>
+                    </form>
+                </div>
+                <hr>
+                <div class="unit">
+                    <p>删除教师</p>
+                    <form id="DeleteTeachers">
+                        <input class="input" id="id1" placeholder="ID"/>
+                        <input type="submit" class="search" value="DELETE"/>
+                    </form>
+                    <br>
+                </div>
+                <hr>
+            </div>
+            <div class="cont" id="cont3" name="Result">
+                <table id="restable" cellspacing="0" cellpadding="5">
+                    <thead>
+                    <tr>
+                        <td>学生ID</td>
+                        <td>学生姓名</td>
+                        <td>课题ID</td>
+                        <td>标题</td>
+                        <td>教师姓名</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="unit">
+                    <p>导出excel</p>
+                    <form action="/CourseDesign/manager/DownloadServlet" method="get">
+                        <input type="submit" class="search" value="DOWNLOAD">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

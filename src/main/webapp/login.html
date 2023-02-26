@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script src="https://npm.elemecdn.com/granim@2.0.0/dist/granim.min.js"></script>
+    <script>
+        window.onload = function () {
+            f();
+        }
+
+        function f() {
+            const form = document.querySelector('#login');
+            // const submit = form.querySelector('input[type="submit"]');
+            const managerBox = form.querySelector('input[id="manager"]');
+            const teacherBox = form.querySelector('input[id="teacher"]');
+            const studentBox = form.querySelector('input[id="student"]');
+            var url = "/CourseDesign/";
+            var flag = "login";
+
+            form.addEventListener('submit', (event) => {
+                // 防止默认提交行为
+                event.preventDefault();
+
+                if (managerBox.checked) {
+                    url = "/CourseDesign/AdminServlet";
+                    flag = "manager";
+                } else if (teacherBox.checked) {
+                    url = "/CourseDesign/TeacherServlet";
+                    flag = "teacher";
+                } else if (studentBox.checked) {
+                    url = "/CourseDesign/StudentServlet";
+                    flag = "student";
+                }
+
+                var formData = new URLSearchParams();
+                const user = form.elements['user'].value;
+                const password = form.elements['password'].value;
+                formData.append('user', user);
+                formData.append('password', password);
+
+                fetch(url, {
+                    method: 'post',
+                    body: formData,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const code = data.code;
+                        if (code == 200) {
+                            window.location.href = `/CourseDesign/${flag}/${flag}.html`;
+                        } else {
+                            alert("账号或密码错误");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            })
+        }
+    </script>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        /*渐变背景CSS */
+        .footer.css-3m0ceo {
+            display: none;
+        }
+
+        #canvas-basic {
+            position: fixed;
+            display: block;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -999;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .login-content {
+            position: relative;
+            background-color: white;
+            height: 500px;
+            width: 400px;
+            border-radius: 7px;
+            margin: 0 auto;
+            top: 80px;
+            box-shadow: 0px 2px 30px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-form {
+            /* float: right; */
+            padding: 24px 48px;
+            user-select: none;
+        }
+
+        .loginF {
+            position: relative;
+            display: block;
+            /* top: 50%;
+            left: 45%; */
+        }
+
+        .login-input {
+            width: 280px;
+            height: 40px;
+            border-radius: 2px;
+            border: 1px solid rgba(229, 229, 229, 1);
+            padding: 0 10px;
+            outline: none;
+            margin-bottom: 12px;
+        }
+
+        .submit {
+            width: 300px;
+            height: 40px;
+            outline: none;
+            border: 1px;
+            background: #3B82FF;
+            color: #fff;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<canvas id="canvas-basic"></canvas>
+<script>
+    var granimInstance = new Granim({
+        element: '#canvas-basic',
+        direction: 'left-right',
+        isPausedWhenNotInView: true,
+        states: {
+            "default-state": {
+                gradients: [
+                    ['#a18cd1', '#fbc2eb'],
+                    ['#fff1eb', '#ace0f9'],
+                    ['#d4fc79', '#96e6a1'],
+                    ['#a1c4fd', '#c2e9fb'],
+                    ['#a8edea', '#fed6e3'],
+                    ['#9890e3', '#b1f4cf'],
+                    ['#a1c4fd', '#c2e9fb'],
+                    ['#fff1eb', '#ace0f9']
+                ]
+            }
+        }
+    });
+</script>
+<div class="container">
+    <div class="login-content">
+        <form id="login" name="login">
+            <div class="login-form">
+                <div class="loginF">
+                    <h2 style="margin-bottom: 24px;">用户登录</h2>
+                    <label>账户：<br>
+                        <input class="login-input" type="text" name="user" id="user">
+                    </label><br>
+                    <label>密码：<br>
+                        <input class="login-input" type="password" name="password" id="password">
+                    </label><br>
+
+                    <input type="radio" name="use" id="manager">管理员
+                    <input type="radio" name="use" id="teacher">教师
+                    <input type="radio" name="use" id="student">学生
+
+                    <input class="submit" type="submit">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>
