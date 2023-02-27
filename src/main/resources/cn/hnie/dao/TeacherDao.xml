@@ -18,17 +18,36 @@
         insert into subject(teacher_id, title, content)
         VALUES (#{teacherId}, #{title}, #{content})
     </insert>
+<!--    <select id="queryStudent" resultMap="stu_sub">-->
+<!--        select student_id, name, sex, phone_number, title, subject.content as content, subject.subject_id as subjectId-->
+<!--        from student,-->
+<!--             subject-->
+<!--        where student.subject_id = subject.subject_id-->
+<!--          and subject.teacher_id = #{id}-->
+<!--    </select>-->
     <select id="queryStudent" resultMap="stu_sub">
-        select student_id, name, sex, phone_number, title, subject.content as content, subject.subject_id as subjectId
-        from student,
-             subject
-        where student.subject_id = subject.subject_id
-          and subject.teacher_id = #{id}
+        select
+            student.student_id as student_id,
+            name,
+            sex,
+            phone_number,
+            title,
+            content,
+            subject_id as subjectId
+        from student
+                 join stu_subj on stu_subj.studentID=student.student_id
+                 join subject on stu_subj.subjectID=subject.subject_id
+        where stu_subj.choose='0' and subject.teacher_id=#{teacherId};
     </select>
+<!--    <update id="selectStudent">-->
+<!--        update student-->
+<!--        set teacher_id=#{id}-->
+<!--        where student_id = #{stuId}-->
+<!--    </update>-->
     <update id="selectStudent">
-        update student
-        set teacher_id=#{id}
-        where student_id = #{stuId}
+        update stu_subj
+        set choose='1'
+        where studentID=#{stuId}
     </update>
     <update id="updatePasswd">
         update teacher

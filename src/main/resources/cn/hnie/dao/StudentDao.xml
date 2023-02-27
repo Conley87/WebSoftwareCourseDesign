@@ -3,9 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.hnie.dao.StudentDao">
+    <resultMap id="studentResult" type="student">
+        <result property="teacherId" column="teacher_id"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="studentId" column="student_id"/>
+        <result property="subjectId" column="subject_id"/>
+    </resultMap>
     <resultMap id="SubjectResult" type="subject">
         <result property="teacherId" column="teacher_id"/>
         <result property="subjectId" column="subject_id"/>
+    </resultMap>
+    <resultMap id="ChooseResult" type="choose">
+        <result property="teacherId" column="teacher_id"/>
+        <result property="subjectId" column="subjectID"/>
     </resultMap>
 
     <select id="login" resultType="string">
@@ -19,15 +29,33 @@
                  JOIN teacher
         where subject.teacher_id = teacher.teacher_id
     </select>
-    <update id="selectSubject">
-        update student
-        set subject_id=#{subId}
-        where student_id = #{stuId};
-    </update>
+    <select id="selectStudent" resultMap="studentResult">
+        select *
+        from student
+        where student_id=#{id}
+    </select>
+    <select id="selectChoose" resultMap="ChooseResult">
+        select teacher.teacher_id,
+               stu_subj.subjectID
+        from stu_subj
+                 join subject on stu_subj.subjectID = subject.subject_id
+                 join teacher on subject.teacher_id = teacher.teacher_id
+        where stu_subj.choose = '1'
+          and stu_subj.studentID = #{id}
+    </select>
+    <select id="selectSubject">
+        insert into stu_subj(studentID, subjectID)
+        values (#{stuId}, #{subId})
+    </select>
     <update id="updatePasswd">
         update student set password=#{passwd}
         where student_id=#{id}
     </update>
+    <delete id="deleteStudent">
+        delete
+        from student
+        where student_id = #{id}
+    </delete>
     <!--    <update id="submitSubject">-->
     <!--        update student-->
     <!--        set content=#{content}-->

@@ -2,7 +2,6 @@ package cn.hnie.servlet.student;
 
 import cn.hnie.domain.Result;
 import cn.hnie.service.StudentService;
-import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 
 import javax.servlet.ServletException;

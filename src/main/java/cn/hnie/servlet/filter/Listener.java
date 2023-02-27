@@ -4,9 +4,13 @@ package cn.hnie.servlet.filter;
 import cn.hnie.service.DruidDataSourceFactory;
 import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpSessionAttributeListener;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 

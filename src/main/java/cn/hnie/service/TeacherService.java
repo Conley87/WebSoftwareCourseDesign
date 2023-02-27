@@ -30,7 +30,7 @@ public class TeacherService {
     //查询所有选择该教师题目的学生
     public static List<StudentSubject> queryStudent(String teacherId) {
         SqlSession session = DBUtils.getSession(true);
-        cn.hnie.dao.TeacherDao mapper = session.getMapper(cn.hnie.dao.TeacherDao.class);
+        cn.hnie.dao.TeacherDao mapper = session.getMapper(TeacherDao.class);
         List<StudentSubject> studentSubjects = mapper.queryStudent(teacherId);
         session.close();
         return studentSubjects;
@@ -39,7 +39,7 @@ public class TeacherService {
     //选择学生
     public static int selectStudent(String teacherId, String[] stuId) {
         SqlSession session = DBUtils.getSession(true);
-        cn.hnie.dao.TeacherDao mapper = session.getMapper(cn.hnie.dao.TeacherDao.class);
+        cn.hnie.dao.TeacherDao mapper = session.getMapper(TeacherDao.class);
         int count = 0;
         for (String s : stuId) {
             count = count + mapper.selectStudent(teacherId, s);

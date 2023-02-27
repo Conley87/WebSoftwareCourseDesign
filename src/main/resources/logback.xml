@@ -31,10 +31,7 @@
         </encoder>
     </appender>
 
-    <!--"com.dl.test"包下的类的日志 -->
     <logger name="cn.hnie.dao" level="all"  additivity="false">
-        <!--日志输出级别-->
-        <!--        <level value="debug"/>-->
         <appender-ref ref="console"/>
     </logger>
     <!--root级别 DEBUG -->

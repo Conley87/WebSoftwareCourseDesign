@@ -13,7 +13,9 @@ public interface TeacherDao {
     //发布题目
     boolean insertSubject(Subject s);
 
+    // 查看学生
     List<StudentSubject> queryStudent(String teacherId);
+
     //选择学生
     int selectStudent(@Param("id") String id, @Param("stuId") String stuId);
 
