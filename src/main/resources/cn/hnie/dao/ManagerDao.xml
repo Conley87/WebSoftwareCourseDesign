@@ -76,7 +76,7 @@
     <select id="selectTeacherById" resultMap="teacherResult">
         select * from teacher where teacher_id=#{id};
     </select>
-    <select id="selectTeacherAll" resultType="Teacher">
+    <select id="selectTeacherAll" resultMap="teacherResult">
         select * from teacher;
     </select>
     <update id="updateTeacher">
