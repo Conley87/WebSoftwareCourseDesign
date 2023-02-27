@@ -1,6 +1,8 @@
 package cn.hnie.service;
 
 import cn.hnie.dao.StudentDao;
+import cn.hnie.domain.Choose;
+import cn.hnie.domain.Student;
 import cn.hnie.domain.Subject;
 import org.apache.ibatis.session.SqlSession;
 
@@ -16,6 +18,19 @@ public class StudentService {
         return passwd != null && passwd.equals(password);
     }
 
+    //查看基本信息
+    public static Student queryInfo(String id) {
+        SqlSession session = DBUtils.getSession(true);
+        StudentDao mapper = session.getMapper(StudentDao.class);
+        Student student = mapper.selectStudent(id);
+        Choose choose = mapper.selectChoose(id);
+        if (choose!=null) {
+            student.setTeacherId(choose.getTeacherId());
+            student.setSubjectId(choose.getSubjectId());
+        }
+        session.close();
+        return student;
+    }
     //查看所有发布的题目
     public static List<Subject> queryAllSubject() {
         SqlSession session = DBUtils.getSession(true);

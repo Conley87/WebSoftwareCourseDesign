@@ -24,10 +24,14 @@
     </select>
 
 
+<!--    <insert id="insertStudent" parameterType="student">-->
+<!--        insert into student-->
+<!--        values (#{studentId}, #{password}, #{name}, #{teacherId}, #{age}, #{sex}, #{department}, #{phoneNumber},-->
+<!--                #{subjectId})-->
+<!--    </insert>-->
     <insert id="insertStudent" parameterType="student">
         insert into student
-        values (#{studentId}, #{password}, #{name}, #{teacherId}, #{age}, #{sex}, #{department}, #{phoneNumber},
-                #{subjectId})
+        values (#{studentId}, #{password}, #{name},  #{age}, #{sex}, #{department}, #{phoneNumber})
     </insert>
     <delete id="deleteStudentById">
         delete
@@ -43,20 +47,21 @@
         select *
         from student;
     </select>
-    <update id="updateStudent" parameterType="student">
+    <update id="updateStudent" parameterType="student">#
         update student
         <set>
-            <if test="password != null">password = #{password},</if>
-            <if test="name != null and name != ''">name = #{name},</if>
-            <if test="teacherId != null and teacherId != ''">teacher_id = #{teacherId},</if>
-            <if test="age > 0">age =#{age},</if>
-            <if test="sex != null and sex != ''">sex =#{sex},</if>
-            <if test="department != null and department != ''">department =#{department},</if>
-            <if test="phoneNumber != null and phoneNumber != ''">phone_number = #{phoneNumber},</if>
-            <if test="subjectId >0">subject_id = #{subjectId},</if>
+            <if test="password !=null">password = #{password},</if>
+            <if test="name !=null">name = #{name},</if>
+#             <if test="teacherId!=null">teacher_id = #{teacherId},</if>
+            <if test="age >0">age =#{age},</if>
+            <if test="sex !=null">sex =#{sex},</if>
+            <if test="department !=null">department =#{department},</if>
+            <if test="phoneNumber !=null">phone_number = #{phone_number},</if>
+#             <if test="subjectId >0">subject_id = #{subjectId},</if>
         </set>
-        where student_id=#{studentId}
+            where student_id=#{studentId}
     </update>
+
 
 
     <insert id="insertTeacher" parameterType="teacher">
@@ -69,41 +74,51 @@
         where teacher_id = #{id};
     </delete>
     <select id="selectTeacherById" resultMap="teacherResult">
-        select *
-        from teacher
-        where teacher_id = #{id};
+        select * from teacher where teacher_id=#{id};
     </select>
     <select id="selectTeacherAll" resultMap="teacherResult">
-        select *
-        from teacher;
+        select * from teacher;
     </select>
     <update id="updateTeacher">
         update teacher
         <set>
-            <if test="password != null">password =#{password},</if>
-            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="password !=null">password =#{password},</if>
+            <if test="name !=null">name = #{name},</if>
             <if test="age >0">age = #{age},</if>
-            <if test="department != null and department != ''">department = #{department},</if>
-            <if test="phoneNumber != null and phoneNumber != ''">phone_number =#{phoneNumber}</if>
+            <if test="department !=null">department = #{department},</if>
+            <if test="phoneNumber !=null">phone_number =#{phoneNumber}</if>
         </set>
         where teacher_id=#{teacherId}
     </update>
     <update id="updatePasswd">
         update manager
         set password=#{passwd}
-        where admin_id = #{id}
+        where admin_id=#{id}
     </update>
+
+<!--    <select id="adjust" resultType="adjust">-->
+<!--        select student.student_id as stuId,-->
+<!--               student.name       as name,-->
+<!--               subject.subject_id as subId,-->
+<!--               subject.title      as title,-->
+<!--               teacher.name       as teaName-->
+<!--        from student,-->
+<!--             teacher,-->
+<!--             subject-->
+<!--        where student.subject_id = subject.subject_id-->
+<!--          and subject.teacher_id = teacher.teacher_id;-->
+<!--    </select>-->
 
     <select id="adjust" resultType="adjust">
         select student.student_id as stuId,
                student.name       as name,
-               subject.subject_id as subId,
+               stu_subj.subjectID as subId,
                subject.title      as title,
                teacher.name       as teaName
-        from student,
-             teacher,
-             subject
-        where student.subject_id = subject.subject_id
-          and subject.teacher_id = teacher.teacher_id;
+        from student
+                 join stu_subj on stu_subj.studentID = student.student_id
+                 join subject on stu_subj.subjectID = subject.subject_id
+                 join teacher on teacher.teacher_id = subject.teacher_id
+        where stu_subj.choose='1'
     </select>
 </mapper>

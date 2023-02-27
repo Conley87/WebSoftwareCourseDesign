@@ -4,9 +4,12 @@ import cn.hnie.domain.Result;
 import cn.hnie.service.TeacherService;
 import com.alibaba.fastjson2.JSONObject;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 //接受一个带有要选择学生id的数组

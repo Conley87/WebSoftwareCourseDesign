@@ -48,8 +48,6 @@
                                 <td>${row.sex}</td>
                                 <td>${row.department}</td>
                                 <td>${row.phoneNumber}</td>
-                                <td>${row.subjectId}</td>
-                                <td>${row.teacherId}</td>
                                 </tr>`;
                         });
 
@@ -74,10 +72,10 @@
                 const name = form.elements['name'].value;
                 const sex = form.elements['sex'].value;
                 const age = form.elements['age'].value;
-                const subjectId = form.elements['subject_id'].value;
+                // const subjectId = form.elements['subject_id'].value;
                 const department = form.elements['department'].value;
                 const phoneNumber = form.elements['phone_number'].value;
-                const teacherId = form.elements['teacher_id'].value;
+                // const teacherId = form.elements['teacher_id'].value;
 
                 // 将值打包为 JSON 对象
                 const formData = {
@@ -85,10 +83,10 @@
                     name: name,
                     sex: sex,
                     age: age,
-                    subjectId: subjectId,
+                    // subjectId: subjectId,
                     department: department,
                     phoneNumber: phoneNumber,
-                    teacherId: teacherId
+                    // teacherId: teacherId
                 };
 
                 // 使用 Fetch API 发送 POST 请求
@@ -122,10 +120,10 @@
                 const name = form.elements['name'].value;
                 const sex = form.elements['sex'].value;
                 const age = form.elements['age'].value;
-                const subjectId = form.elements['subject_id'].value;
+                // const subjectId = form.elements['subject_id'].value;
                 const department = form.elements['department'].value;
                 const phoneNumber = form.elements['phone_number'].value;
-                const teacherId = form.elements['teacher_id'].value;
+                // const teacherId = form.elements['teacher_id'].value;
 
                 // 将值打包为 JSON 对象
                 const formData = {
@@ -133,10 +131,10 @@
                     name: name,
                     sex: sex,
                     age: age,
-                    subjectId: subjectId,
+                    // subjectId: subjectId,
                     department: department,
                     phoneNumber: phoneNumber,
-                    teacherId: teacherId
+                    // teacherId: teacherId
                 };
 
                 // 使用 Fetch API 发送 POST 请求
@@ -412,7 +410,7 @@
         <img class="title" src="../Title.png">
         <ul class="topbar">
             <li><a href="#">管理员</a></li>
-            <li><a href="/CourseDesign/Logout">登出</a></li>
+            <li><a href="/CourseDesign/LogoutServlet">登出</a></li>
         </ul>
     </div>
     <div class="main">
@@ -443,50 +441,48 @@
                         <td>性别</td>
                         <td>所在系</td>
                         <td>联系电话</td>
-                        <td>课题ID</td>
-                        <td>导师ID</td>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td onclick="alert(`hello`)">1</td>
-                        <td>1</td>
-                        <td>aaa</td>
-                        <td>nan</td>
-                        <td>11</td>
-                        <td>21241</td>
-                        <td>department</td>
-                        <td>114514</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>aaa</td>
-                        <td>nan</td>
-                        <td>11</td>
-                        <td>21241</td>
-                        <td>department</td>
-                        <td>114514</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>aaa</td>
-                        <td>nan</td>
-                        <td>11</td>
-                        <td>21241</td>
-                        <td>department</td>
-                        <td>114514</td>
-                        <td>1</td>
-                    </tr>
+<!--                    <tr>-->
+<!--                        <td onclick="alert(`hello`)">1</td>-->
+<!--                        <td>1</td>-->
+<!--                        <td>aaa</td>-->
+<!--                        <td>nan</td>-->
+<!--                        <td>11</td>-->
+<!--                        <td>21241</td>-->
+<!--                        <td>department</td>-->
+<!--                        <td>114514</td>-->
+<!--                        <td>1</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1</td>-->
+<!--                        <td>1</td>-->
+<!--                        <td>aaa</td>-->
+<!--                        <td>nan</td>-->
+<!--                        <td>11</td>-->
+<!--                        <td>21241</td>-->
+<!--                        <td>department</td>-->
+<!--                        <td>114514</td>-->
+<!--                        <td>1</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>1</td>-->
+<!--                        <td>1</td>-->
+<!--                        <td>aaa</td>-->
+<!--                        <td>nan</td>-->
+<!--                        <td>11</td>-->
+<!--                        <td>21241</td>-->
+<!--                        <td>department</td>-->
+<!--                        <td>114514</td>-->
+<!--                        <td>1</td>-->
+<!--                    </tr>-->
                     </tbody>
                 </table>
                 <div class="unit">
                     <p>查找学生</p>
                     <form id="searchStudents">
-                        <input class="input" id="id" placeholder=" ID"/>
+                        <input class="input" id="id" placeholder="ID"/>
                         <input type="submit" class="search" value="Search"/>
                     </form>
                     <br>
@@ -498,17 +494,17 @@
                     <form id="AddModifyStudents">
                         <div>
                             <!-- 点击获取id -->
-                            <label for="id">ID:</label>
+                            <label for="id">学生ID:</label>
                             <input class="input" id="id" name="id" placeholder="ID"/>
                             <br>
                         </div>
                         <div>
-                            <label for="name">name:</label>
+                            <label for="name">姓名:</label>
                             <input class="input" id="name" name="name" placeholder="name"/>
                             <br>
                         </div>
                         <div>
-                            <label for="sex">sex:</label>
+                            <label for="sex">性别:</label>
                             <select id="sex" name="sex" class="input">
                                 <option value="男">男性</option>
                                 <option value="女">女性</option>
@@ -516,30 +512,30 @@
                             <br>
                         </div>
                         <div>
-                            <label for="age">age:</label>
+                            <label for="age">年龄:</label>
                             <input class="input" id="age" name="age" placeholder="age"/>
                             <br>
                         </div>
+<!--                        <div>-->
+<!--                            <label for="subject_id">subjectId:</label>-->
+<!--                            <input class="input" id="subject_id" name="subject_id" placeholder="subjectId"/>-->
+<!--                            <br>-->
+<!--                        </div>-->
                         <div>
-                            <label for="subject_id">subjectId:</label>
-                            <input class="input" id="subject_id" name="subject_id" placeholder="subjectId"/>
-                            <br>
-                        </div>
-                        <div>
-                            <label for="department">department:</label>
+                            <label for="department">所在系:</label>
                             <input class="input" id="department" name="department" placeholder="department"/>
                             <br>
                         </div>
                         <div>
-                            <label for="phone_number">phoneNumber:</label>
+                            <label for="phone_number">联系电话:</label>
                             <input class="input" id="phone_number" name="phone_number" placeholder="phoneNumber"/>
                             <br>
                         </div>
-                        <div>
-                            <label for="teacher_id">teacherId:</label>
-                            <input class="input" id="teacher_id" name="teacher_id" placeholder="teacherId"/>
-                            <br>
-                        </div>
+<!--                        <div>-->
+<!--                            <label for="teacher_id">teacherId:</label>-->
+<!--                            <input class="input" id="teacher_id" name="teacher_id" placeholder="teacherId"/>-->
+<!--                            <br>-->
+<!--                        </div>-->
                         <input type="button" id="ADD" class="search" value="ADD"/>
                         <input type="button" id="MODIFY" class="search" value="MODIFY"/>
                     </form>

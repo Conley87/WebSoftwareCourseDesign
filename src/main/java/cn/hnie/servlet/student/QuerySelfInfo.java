@@ -2,7 +2,7 @@ package cn.hnie.servlet.student;
 
 import cn.hnie.domain.Result;
 import cn.hnie.domain.Student;
-import cn.hnie.service.ManagerService;
+import cn.hnie.service.StudentService;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.JSONWriter;
 
@@ -19,13 +19,13 @@ public class QuerySelfInfo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String studentId = (String) req.getSession().getAttribute("studentId");
-        List<Student> student = ManagerService.selectStudentById(studentId);
+        Student student = StudentService.queryInfo(studentId);
         Result result;
 
         resp.setContentType("application/json;charset=utf-8");
 
         if (student != null) {
-            result = new Result("200", student.toArray(), "学生查询成功");
+            result = new Result("200", List.of(student).toArray(), "学生查询成功");
         } else
             result = new Result("2001", "学生查询失败");
 
